@@ -3,6 +3,10 @@ html {
     min-height: 100%;
 }
 
+h1 {
+    font-weight: 100;
+}
+
 body {
     background-color: #817790;
     color: #333;
@@ -17,6 +21,7 @@ body {
     background-color: #817790;
     align-content: center;
     vertical-align: center;
+    margin-bottom: 50px;
 }
 
 .topnav a {
@@ -35,6 +40,7 @@ body {
 
 .social a {
     border: none;
+    text-decoration: none;
 }
 
 .social a img {
@@ -44,12 +50,9 @@ body {
     margin: 10px 10px 10px 10px;
 }
 
-img {
+.avatar {
     max-width: 100%;
-}
-
-#space {
-    margin: 50px;
+    border-radius: 50%;
 }
 
 footer {
@@ -60,7 +63,7 @@ footer {
     position: fixed;
     margin: -40px auto 0 auto;
     z-index: 30;
-    background-color: #817790cf;
+    background-color: #817790a0;
 }
 
 iframe {
@@ -70,4 +73,35 @@ iframe {
 
 #soundcloud {
     padding-bottom: 200;
+}
+
+#contact {
+    margin-top: 50px;
+}
+
+input, textarea, button {
+    font: inherit;
+    margin: 5px 5px;
+    border: none;
+    background-color: #FFFFFF44;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+form {
+    text-align: left;
+    width: 300px;
+    max-width: 60%;
+    min-width: 30%;
+    margin: 0 auto;
+    margin-bottom: 450px;
+}
+
+form > div {
+    display: flex;
+    flex-direction: column;
+}
+
+button {
+    padding: 5px 30px;
 }
