@@ -33,12 +33,23 @@ body {
     color: #CCC;
 }
 
+.social a {
+    border: none;
+}
+
+.social a img {
+    width: 40px;
+    height: 40px;
+    border: none;
+    margin: 10px 10px 10px 10px;
+}
+
 img {
     max-width: 100%;
 }
 
 #space {
-    margin: 100px;
+    margin: 50px;
 }
 
 footer {

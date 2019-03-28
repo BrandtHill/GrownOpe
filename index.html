@@ -16,11 +16,45 @@
         <a href="#contact">Contact</a>
         <a href="#episodes">Episodes</a>
     </div>
+    <div id="space"></div>
+    <div class="social">
+        <a href="https://twitter.com/grownope" target="_blank">
+            <img src="./twitter_logo.png" >
+        </a>
+        <a href="https://instagram.com/grownope" target="_blank">
+            <img src="./instagram_logo.png" >
+        </a>
+        <a href="https://soundcloud.com/grownope" target="_blank">
+            <img src="./soundcloud_logo.png" >
+        </a>
+        <a href="https://open.spotify.com/show/4hRaEXGRcnsdH2U9GpH50U" target="_blank">
+            <img src="./spotify_logo.png" >
+        </a>
+    </div>
     <h1>Welcome to Grown Ope</h1>
     <div id="soundcloud">
         <iframe width="800" height="400" scrolling="yes" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/429435833&color=%23ff5500&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=true"></iframe>
     </div>
     <div id="space"></div>
+    <div id="contact">
+        <form action="/contact" method="POST">
+            <div>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name"/>
+            </div>
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email"/>
+            </div>
+            <div>
+                <label for="message">Message:</label>
+                <textarea id="message" name="message">Enter your text here</textarea>
+            </div>
+            <div class="button">
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
     <footer>
         <p>Created by Computer Man</p>
         <p><small>v0.1</small></p>
