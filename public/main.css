@@ -1,10 +1,12 @@
+@charset "UTF-8";
+
 html {
     position: relative;
     min-height: 100%;
 }
 
 h1 {
-    font-weight: 100;
+    font-weight: 1050;
 }
 
 body {
@@ -71,7 +73,7 @@ footer {
     position: fixed;
     margin: -40px auto 0 auto;
     z-index: 30;
-    background-color: #817790a0;
+    background-image: linear-gradient(#81779044, #817790);
 }
 
 iframe {
