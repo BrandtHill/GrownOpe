@@ -14,6 +14,11 @@ window.addEventListener("load", () => {
         XHR.open("POST", "http://localhost/contact")
 
         XHR.send(new FormData(form))
+
+        document.getElementsByClassName("button").item(0).remove()
+        let buttonText = document.createElement("h3")
+        buttonText.innerText = "Thanks for contacting us."
+        document.getElementById("contactForm").appendChild(buttonText)
     }
 
     var form = document.getElementById("contactForm")

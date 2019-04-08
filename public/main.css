@@ -104,18 +104,25 @@ input, textarea, button {
     box-shadow: -0px 0px 30px #00000022;
 }
 
+#contact {
+    margin-bottom: 450px;
+}
+
 form {
     text-align: left;
     width: 300px;
     max-width: 60%;
     min-width: 30%;
     margin: 0 auto;
-    margin-bottom: 450px;
 }
 
 form > div {
     display: flex;
     flex-direction: column;
+}
+
+form > h3 {
+    text-align: center;
 }
 
 button {
