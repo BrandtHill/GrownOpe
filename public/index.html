@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link rel="icon" type="image/jpg" href="grown-ope-logo.jpg" />
     <script src="main.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
     <img class="avatar" src="grown-ope-logo.jpg" />
@@ -16,6 +17,7 @@
         <a href="#">Home</a>
         <a href="#episodes">Episodes</a>
         <a href="#contact">Contact</a>
+        <a href="#voicemail">Voicemail</a>
     </div>
     <div class="social">
         <a href="https://twitter.com/grownope" target="_blank">
@@ -46,17 +48,30 @@
         <form id="contactForm">
             <div>
                 <label for="name">Name:</label>
-                <input type="text" id="name" name="name"/>
+                <input type="text" id="name" name="name" placeholder="Your name"/>
             </div>
             <div>
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email"/>
+                <input type="email" id="email" name="email" placeholder="you@example.com"/>
             </div>
             <div>
                 <label for="message">Message:</label>
-                <textarea id="message" name="message"></textarea>
+                <textarea id="message" name="message" placeholder="What would you like to tell us?"></textarea>
             </div>
-            <div class="button">
+            <div class="g-recaptcha" data-sitekey="6LcH_JwUAAAAADADcc1M8YGH_hEgAY-C9pQe9O7o" data-callback="enableButton"></div>
+            <div class="button" id="contactButton">
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+    <div id="voicemail">
+        <form id="voicemailForm" enctype="multipart/form-data">
+            <div>
+                <label for="audiofile">Audio File:</label>
+                <input type="file" id="audiofile" accept="audio/*" capture>
+            </div>
+            <div class="g-recaptcha" data-sitekey="6LcH_JwUAAAAADADcc1M8YGH_hEgAY-C9pQe9O7o" data-callback="enableButton"></div>
+            <div class="button" id="voicemailButton">
                 <button type="submit">Submit</button>
             </div>
         </form>

@@ -6,7 +6,7 @@ html {
 }
 
 h1 {
-    font-weight: 1050;
+    font-weight: 100;
 }
 
 body {
@@ -76,7 +76,7 @@ footer {
     background-image: linear-gradient(#81779044, #817790);
 }
 
-iframe {
+#episodes iframe {
     max-width: 90%;
     min-width: 50%;
     box-shadow: -0px 0px 90px #00000044;
@@ -104,7 +104,7 @@ input, textarea, button {
     box-shadow: -0px 0px 30px #00000022;
 }
 
-#contact {
+#voicemail {
     margin-bottom: 450px;
 }
 
@@ -114,6 +114,11 @@ form {
     max-width: 60%;
     min-width: 30%;
     margin: 0 auto;
+}
+
+.g-recaptcha > div {
+    margin: 0 auto;
+    text-align: center;
 }
 
 form > div {

@@ -1,6 +1,5 @@
 window.addEventListener("load", () => {
-
-    let sendData = () => {
+    let sendData = (form) => {
         var XHR = new XMLHttpRequest()
 
         XHR.addEventListener("load", (event) => {
@@ -11,20 +10,30 @@ window.addEventListener("load", () => {
             alert("Something went awry!")
         })
 
-        XHR.open("POST", "http://localhost/contact")
+        XHR.open("POST", "http://localhost/" + form.id.replace('Form', ''))
 
         XHR.send(new FormData(form))
 
-        document.getElementsByClassName("button").item(0).remove()
+        document.getElementById(form.id.replace('Form', '') + 'Button').remove()
         let buttonText = document.createElement("h3")
         buttonText.innerText = "Thanks for contacting us."
-        document.getElementById("contactForm").appendChild(buttonText)
+        form.appendChild(buttonText)
     }
 
-    var form = document.getElementById("contactForm")
+    var contactForm = document.getElementById("contactForm")
+    var voicemailForm = document.getElementById("voicemailForm")
 
-    form.addEventListener("submit", (event) => {
+    contactForm.addEventListener("submit", (event) => {
         event.preventDefault()
-        sendData()
+        sendData(contactForm)
+    })
+
+    voicemailForm.addEventListener("submit", (event) => {
+        event.preventDefault()
+        sendData(voicemailForm)
     })
 })
+
+var enableButton = () => {
+    console.log("You are not robot")
+}
