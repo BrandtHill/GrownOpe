@@ -3,6 +3,8 @@ import smtplib
 import json
 import requests
 import configparser
+from email.MIMEMultipart import MIMEMultipart
+from email.MIMEAudio import MIMEAudio
 
 app = Flask(__name__, static_folder='../public/', root_path='../')
 app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024 * 25
@@ -39,6 +41,9 @@ def voicemail_upload():
     print(request.files.get('audiofile'))
     ver_res = verify_recaptcha(request.form.get('g-recaptcha-response'), request.remote_addr)
     if (not ver_res['success']): return 'You are a robot. Contact not made.'
+
+    msg = MIMEMultipart()
+    msg.attach(MIMEAudio(request.files.get('audiofile')))
     return 'File sent'
 
 def verify_recaptcha(response_token, ip_addr):
