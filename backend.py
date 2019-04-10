@@ -14,6 +14,7 @@ SECRET_KEY = config['DEFAULT']['SECRET_KEY']
 
 @app.route('/contact', methods=['POST'])
 def contact():
+    print(request.form)
     ver_res = verify_recaptcha(request.form.get('g-recaptcha-response'), request.remote_addr)
     if (not ver_res['success']): return 'You are a robot. Contact not made.'
     
@@ -34,9 +35,9 @@ def contact():
 
 @app.route('/voicemail', methods=['POST'])
 def voicemail_upload():
+    print(request.form)
     ver_res = verify_recaptcha(request.form.get('g-recaptcha-response'), request.remote_addr)
     if (not ver_res['success']): return 'You are a robot. Contact not made.'
-    print(request.form)
     return 'File sent'
 
 def verify_recaptcha(response_token, ip_addr):

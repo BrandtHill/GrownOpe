@@ -1,39 +1,37 @@
 window.addEventListener("load", () => {
     let sendData = (form) => {
         var XHR = new XMLHttpRequest()
+        let formName = form.id.replace('Form', '')
 
         XHR.addEventListener("load", (event) => {
-            alert(event.target.responseText)
+            console.log(event.target.responseText)
         })
 
         XHR.addEventListener("error", (event) => {
-            alert("Something went awry!")
+            console.log("Something went awry!" + event.target.responseText)
         })
 
-        XHR.open("POST", "http://localhost/" + form.id.replace('Form', ''))
+        XHR.open("POST", "http://localhost/" + formName)
 
         XHR.send(new FormData(form))
 
-        document.getElementById(form.id.replace('Form', '') + 'Button').remove()
-        let buttonText = document.createElement("h3")
-        buttonText.innerText = "Thanks for contacting us."
-        form.appendChild(buttonText)
+        button = document.getElementById(formName + 'Button')
+        button.innerText = 'Submitted'
+        button.disabled = true
     }
 
-    var contactForm = document.getElementById("contactForm")
-    var voicemailForm = document.getElementById("voicemailForm")
+    var forms = document.getElementsByTagName('form')
 
-    contactForm.addEventListener("submit", (event) => {
-        event.preventDefault()
-        sendData(contactForm)
-    })
-
-    voicemailForm.addEventListener("submit", (event) => {
-        event.preventDefault()
-        sendData(voicemailForm)
-    })
+    for (let f of forms) {
+        f.addEventListener('submit', e => {
+            e.preventDefault()
+            console.log("SUBMIT EVENT HEARD " + f.id)
+            sendData(f)
+        })
+    }
 })
 
-var enableButton = () => {
-    console.log("You are not robot")
+var onloadCallback = () => {
+    contactRecap = grecaptcha.render('contactRecap', {'callback': () => document.getElementById('contactForm').dispatchEvent(new Event('submit'))}, true)
+    voicemailRecap = grecaptcha.render('voicemailRecap', {'callback': () => document.getElementById('voicemailForm').dispatchEvent(new Event('submit'))}, true)
 }

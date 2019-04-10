@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link rel="icon" type="image/jpg" href="grown-ope-logo.jpg" />
     <script src="main.js"></script>
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
 </head>
 <body>
     <img class="avatar" src="grown-ope-logo.jpg" />
@@ -48,19 +48,19 @@
         <form id="contactForm">
             <div>
                 <label for="name">Name:</label>
-                <input type="text" id="name" name="name" placeholder="Your name"/>
+                <input type="text" id="name" name="name" placeholder="Your name" required/>
             </div>
             <div>
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" placeholder="you@example.com"/>
+                <input type="email" id="email" name="email" placeholder="you@example.com" required/>
             </div>
             <div>
                 <label for="message">Message:</label>
-                <textarea id="message" name="message" placeholder="What would you like to tell us?"></textarea>
+                <textarea id="message" name="message" placeholder="What would you like to tell us?" required></textarea>
             </div>
-            <div class="g-recaptcha" data-sitekey="6LcH_JwUAAAAADADcc1M8YGH_hEgAY-C9pQe9O7o" data-callback="enableButton"></div>
-            <div class="button" id="contactButton">
-                <button type="submit">Submit</button>
+            <div id="contactRecap" class="g-recaptcha" data-sitekey="6LdSc50UAAAAAIRyRsw2WMzYA0HVR9UVKx3zMiUu" data-size="invisible"></div>
+            <div>
+                <button id="contactButton" type="button" onclick="grecaptcha.execute(contactRecap)">Submit</button>
             </div>
         </form>
     </div>
@@ -68,11 +68,11 @@
         <form id="voicemailForm" enctype="multipart/form-data">
             <div>
                 <label for="audiofile">Audio File:</label>
-                <input type="file" id="audiofile" accept="audio/*" capture>
+                <input type="file" id="audiofile" accept="audio/*" capture required>
             </div>
-            <div class="g-recaptcha" data-sitekey="6LcH_JwUAAAAADADcc1M8YGH_hEgAY-C9pQe9O7o" data-callback="enableButton"></div>
-            <div class="button" id="voicemailButton">
-                <button type="submit">Submit</button>
+            <div id="voicemailRecap" class="g-recaptcha" data-sitekey="6LdSc50UAAAAAIRyRsw2WMzYA0HVR9UVKx3zMiUu" data-size="invisible"></div>
+            <div>
+                <button id="voicemailButton" type="button" onclick="grecaptcha.execute(voicemailRecap)">Submit</button>
             </div>
         </form>
     </div>
