@@ -45,6 +45,7 @@
         <iframe id="spotify" width="800" height="400" frameborder="0" allowtransparency="true" allow="encrypted-media" src="https://open.spotify.com/embed/show/4hRaEXGRcnsdH2U9GpH50U"></iframe>
     </div>
     <div id="contact">
+        <h1>Contact Us</h1>
         <form id="contactForm">
             <div>
                 <label for="name">Name:</label>
@@ -56,7 +57,7 @@
             </div>
             <div>
                 <label for="message">Message:</label>
-                <textarea id="message" name="message" placeholder="What would you like to tell us?" required></textarea>
+                <textarea id="message" name="message" placeholder="Leave a comment, tell a story, or inquire of something" required></textarea>
             </div>
             <div id="contactRecap" class="g-recaptcha" data-sitekey="6LdSc50UAAAAAIRyRsw2WMzYA0HVR9UVKx3zMiUu" data-size="invisible"></div>
             <div>
@@ -65,10 +66,12 @@
         </form>
     </div>
     <div id="voicemail">
+        <h1>Leave a Voicemail</h1>
         <form id="voicemailForm" enctype="multipart/form-data">
             <div>
                 <label for="audiofile">Audio File:</label>
-                <input type="file" id="audiofile" accept="audio/*" capture required>
+                <input type="file" name="audiofile" id="audiofile" accept="audio/*" capture required>
+                <!--<audio id="player" controls></audio>-->
             </div>
             <div id="voicemailRecap" class="g-recaptcha" data-sitekey="6LdSc50UAAAAAIRyRsw2WMzYA0HVR9UVKx3zMiUu" data-size="invisible"></div>
             <div>

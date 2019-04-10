@@ -25,10 +25,11 @@ window.addEventListener("load", () => {
     for (let f of forms) {
         f.addEventListener('submit', e => {
             e.preventDefault()
-            console.log("SUBMIT EVENT HEARD " + f.id)
             sendData(f)
         })
     }
+
+    document.getElementById('audiofile').addEventListener('change', (e) => document.getElementById('player').srcObject = e.target.files[0])
 })
 
 var onloadCallback = () => {
