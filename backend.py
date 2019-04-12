@@ -3,8 +3,10 @@ import smtplib
 import json
 import requests
 import configparser
-from email.MIMEMultipart import MIMEMultipart
-from email.MIMEAudio import MIMEAudio
+import datetime
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from email.mime.audio import MIMEAudio
 
 app = Flask(__name__, static_folder='../public/', root_path='../')
 app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024 * 25
@@ -15,40 +17,59 @@ EMAIL = config['DEFAULT']['EMAIL']
 PASSWORD = config['DEFAULT']['PASSWORD']
 SECRET_KEY = config['DEFAULT']['SECRET_KEY']
 
+audio_map = {
+    'mp3':'mpeg',
+    'm4a':'mp4',
+    'mp4':'mp4',
+    'wav':'wav',
+    'ogg':'ogg',
+    'weba':'webm'
+}
+
 @app.route('/contact', methods=['POST'])
 def contact():
     print(request.form)
     ver_res = verify_recaptcha(request.form.get('g-recaptcha-response'), request.remote_addr)
     if (not ver_res['success']): return 'You are a robot. Contact not made.'
-    
-    message_format = 'From: {}\nTo: {}\nSubject: {}\n\n{}'
-    message_body = 'Name: {}\nEmail: {}\n\nMessage: {}'.format(request.form.get('name'), request.form.get('email'), request.form.get('message'))
-    message = message_format.format(EMAIL, EMAIL, 'Message from ' + request.form.get('name'), message_body)
-    print(message)
-
-    try:
-        server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
-        server.ehlo()
-        server.login(EMAIL, PASSWORD)
-        server.sendmail(EMAIL, [EMAIL], message)
-        server.close()
-    except:
-        print('Email not sent successfully')
-    return 'Contact Made'
+    msg = MIMEText('Name: {}\nEmail: {}\nIP: {}\n\nMessage: {}'.format(request.form.get('name'), request.form.get('email'), request.remote_addr, request.form.get('message')), 'plain', 'utf-8')
+    msg['Subject'] = 'grownope.com: Message from ' + request.form.get('name')
+    msg['From'] = EMAIL
+    msg['To'] = EMAIL
+    return send_email_message(msg)
 
 @app.route('/voicemail', methods=['POST'])
 def voicemail_upload():
-    print(request.files.get('audiofile'))
+    tmp_file = request.files.get('audiofile')
+    print(tmp_file)
     ver_res = verify_recaptcha(request.form.get('g-recaptcha-response'), request.remote_addr)
     if (not ver_res['success']): return 'You are a robot. Contact not made.'
-
     msg = MIMEMultipart()
-    msg.attach(MIMEAudio(request.files.get('audiofile')))
-    return 'File sent'
+    msg['Subject'] = 'grownope.com: Voicemail from ' + request.form.get('name')
+    msg['From'] = EMAIL
+    msg['To'] = EMAIL
+    msg.preamble = 'Received an audiofile {} from IP {}'.format(tmp_file.filename, request.remote_addr)
+    subtype = audio_map[tmp_file.filename.split('.')[-1]]
+    audio_attachment = MIMEAudio(tmp_file.read(), subtype)
+    audio_attachment.add_header('Content-Disposition', 'attachment', filename = tmp_file.filename)
+    msg.attach(audio_attachment)
+    return send_email_message(msg)
 
 def verify_recaptcha(response_token, ip_addr):
     return json.loads(requests.post('https://www.google.com/recaptcha/api/siteverify?secret={}&response={}&remoteip={}'.format(SECRET_KEY, response_token, ip_addr)).text)
 
+def send_email_message(msg):
+    try:
+        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server.ehlo()
+        server.starttls()
+        server.login(EMAIL, PASSWORD)
+        server.send_message(msg)
+        server.close()
+    except Exception as e:
+        print('Email not sent successfully:')
+        print(e)
+        return 'An error occurred whilst trying to send an email.', 500
+    return 'Success'
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=8000, debug=True)

@@ -61,7 +61,7 @@
             </div>
             <div id="contactRecap" class="g-recaptcha" data-sitekey="6LdSc50UAAAAAIRyRsw2WMzYA0HVR9UVKx3zMiUu" data-size="invisible"></div>
             <div>
-                <button id="contactButton" type="button" onclick="grecaptcha.execute(contactRecap)">Submit</button>
+                <button id="contactButton" type="submit">Submit</button>
             </div>
         </form>
     </div>
@@ -69,13 +69,17 @@
         <h1>Leave a Voicemail</h1>
         <form id="voicemailForm" enctype="multipart/form-data">
             <div>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" placeholder="Your name" required/>
+            </div>
+            <div>
                 <label for="audiofile">Audio File:</label>
                 <input type="file" name="audiofile" id="audiofile" accept="audio/*" capture required>
                 <!--<audio id="player" controls></audio>-->
             </div>
             <div id="voicemailRecap" class="g-recaptcha" data-sitekey="6LdSc50UAAAAAIRyRsw2WMzYA0HVR9UVKx3zMiUu" data-size="invisible"></div>
             <div>
-                <button id="voicemailButton" type="button" onclick="grecaptcha.execute(voicemailRecap)">Submit</button>
+                <button id="voicemailButton" type="submit">Submit</button>
             </div>
         </form>
     </div>
