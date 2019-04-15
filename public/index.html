@@ -73,9 +73,10 @@
                 <input type="text" id="name" name="name" placeholder="Your name" required/>
             </div>
             <div>
-                <label for="audiofile">Audio File:</label>
-                <input type="file" name="audiofile" id="audiofile" accept="audio/*" capture required>
-                <!--<audio id="player" controls></audio>-->
+                <label for="audiofile">Audio:</label>
+                <button id="recordStart" type="button">Start Recording</button>
+                <button id="recordStop" type="button">Stop Recording</button>
+                <audio id="player" controls></audio>
             </div>
             <div id="voicemailRecap" class="g-recaptcha" data-sitekey="6LdSc50UAAAAAIRyRsw2WMzYA0HVR9UVKx3zMiUu" data-size="invisible"></div>
             <div>
