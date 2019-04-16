@@ -81,8 +81,8 @@ footer {
     min-width: 25%;
     margin: 0 auto 0 auto;
     z-index: 30;
-    background-image: linear-gradient(#81779088, #817790);
-    border-radius: 40px;
+    background-image: linear-gradient(#817790BB, #817790);
+    border-radius: 20px;
 }
 
 .footer > p {
