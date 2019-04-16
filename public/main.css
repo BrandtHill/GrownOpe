@@ -66,20 +66,34 @@ body {
 }
 
 footer {
-    height: 80px;
     width: 100%;
     text-align: center;
-    bottom: 0;
+    vertical-align: middle;
+    bottom: -45px;
     position: fixed;
-    margin: -40px auto 0 auto;
+    margin: 0 auto 0 auto;
+}
+
+.footer {
+    height: 90px;
+    width: 250px;
+    max-width: 80%;
+    min-width: 25%;
+    margin: 0 auto 0 auto;
     z-index: 30;
-    background-image: linear-gradient(#81779044, #817790);
+    background-image: linear-gradient(#81779088, #817790);
+    border-radius: 40px;
+}
+
+.footer > p {
+    margin: 0 0;
 }
 
 #episodes iframe {
     max-width: 90%;
     min-width: 50%;
     box-shadow: -0px 0px 90px #00000044;
+    border-radius: 20px;
 }
 
 #soundcloud {
@@ -94,7 +108,7 @@ footer {
     margin-top: 50px;
 }
 
-input, textarea, button{
+input, textarea, button {
     font: inherit;
     margin: 5px 5px;
     border: none;
