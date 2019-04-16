@@ -94,7 +94,7 @@ footer {
     margin-top: 50px;
 }
 
-input, textarea, button {
+input, textarea, button{
     font: inherit;
     margin: 5px 5px;
     border: none;
@@ -114,6 +114,16 @@ form {
     max-width: 60%;
     min-width: 30%;
     margin: 0 auto;
+}
+
+#recordButtons {
+    display: inline-flex;
+}
+
+#recordButtons > button, audio {
+    width: 300px;
+    max-width: 60%;
+    min-width: 30%;
 }
 
 .g-recaptcha > div {

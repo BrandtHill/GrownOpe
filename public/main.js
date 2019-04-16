@@ -39,10 +39,14 @@ window.addEventListener('load', () => {
     recordStart.onclick = e => {
         audioChunks = []
         recorder.start()
+        recordStart.disabled = true
+        recordStop.disabled = false
     }
 
     recordStop.onclick = e => {
         recorder.stop()
+        recordStop.disabled = true
+        recordStart.disabled = false
     }
 
 })
