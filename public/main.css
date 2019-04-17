@@ -71,6 +71,7 @@ footer {
     vertical-align: middle;
     bottom: -45px;
     position: fixed;
+    z-index: 0;
     margin: 0 auto 0 auto;
 }
 
@@ -130,19 +131,23 @@ form {
     margin: 0 auto;
 }
 
+audio {
+    display: block;
+    width: 300px;
+}
+
 #recordButtons {
     display: inline-flex;
 }
 
-#recordButtons > button, audio {
+#recordButtons > button {
     width: 300px;
     max-width: 60%;
     min-width: 30%;
 }
 
-.g-recaptcha > div {
-    margin: 0 auto;
-    text-align: center;
+.grecaptcha-badge {
+    z-index: 40;
 }
 
 form > div {

@@ -39,6 +39,7 @@ def contact():
 
 @app.route('/voicemail', methods=['POST'])
 def voicemail_upload():
+    print(request.form)
     tmp_file = request.files.get('audiofile')
     print(tmp_file)
     ver_res = verify_recaptcha(request.form.get('g-recaptcha-response'), request.remote_addr)
