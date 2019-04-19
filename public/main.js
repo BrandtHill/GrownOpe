@@ -13,40 +13,50 @@ window.addEventListener('load', () => {
     var audioChunks = []
     var audioNode
     var audioInput
+    var audioInit = false
     var blob
+    var context
+    var recording = false
     var recordStart = document.getElementById('recordStart')
     var recordStop = document.getElementById('recordStop')
     var player = document.getElementById('player')
 
-    var context = new (AudioContext || webkitAudioContext)()
-    if (context.createJavaScriptNode) audioNode = context.createJavaScriptNode(4096, 1, 1)
-    else if (context.createScriptProcessor) audioNode = context.createScriptProcessor(4096, 1, 1)
-    else alert('WebAudio not supported with your browser.')
-
-    audioNode.connect(context.destination)
-
-    navigator.mediaDevices.getUserMedia({audio:true}).then(onMicStream).catch(e => alert('An error occurred: ' + e))
+    recordStart.disabled = false
 
     let onMicStream = (stream) => {
         audioInput = context.createMediaStreamSource(stream)
         audioInput.connect(audioNode)
         audioNode.onaudioprocess = d => {
-            audioChunks.push(new Float32Array(d.inputBuffer.getChannelData(0)))
-            
+            if (recording) audioChunks.push(new Float32Array(d.inputBuffer.getChannelData(0)))
         }
+        audioInit = true
+        recordStart.innerText = 'Start'
+    }
+
+    let initAudio = () => {
+        context = new (AudioContext || webkitAudioContext)()
+        if (context.createJavaScriptNode) audioNode = context.createJavaScriptNode(4096, 1, 1)
+        else if (context.createScriptProcessor) audioNode = context.createScriptProcessor(4096, 1, 1)
+        else alert('WebAudio not supported with your browser.')
+        audioNode.connect(context.destination)
+        navigator.mediaDevices.getUserMedia({audio:true}).then(onMicStream).catch(e => alert('An error occurred: ' + e))
     }
 
     recordStart.onclick = e => {
         audioChunks = []
-        console.log('hellllllooooo')
-        recordStart.disabled = true
-        recordStop.disabled = false
+        if (!audioInit) initAudio()
+        else {
+            recording = true
+            recordStart.disabled = true
+            recordStop.disabled = false
+        }
     }
 
     recordStop.onclick = e => {
         recordStop.disabled = true
         recordStart.disabled = false
-        
+        recording = false
+        console.log(audioChunks.length)
     }
 
 })
