@@ -11,49 +11,39 @@ window.addEventListener('load', () => {
     }
 
     var audioChunks = []
-    var recorder
-    var blob
     var audioNode
+    var audioInput
+    var blob
     var recordStart = document.getElementById('recordStart')
     var recordStop = document.getElementById('recordStop')
     var player = document.getElementById('player')
 
     var context = new (AudioContext || webkitAudioContext)()
     if (context.createJavaScriptNode) audioNode = context.createJavaScriptNode(4096, 1, 1)
-    
-    var source = context.createMediaStreamSource(stream)
-    var processor = context.createScriptProcessor(1024, 1, 1)
-    source.connect(processor)
-    processor.connect(context.destination)
-    processor.onaudioprocess = e => {
+    else if (context.createScriptProcessor) audioNode = context.createScriptProcessor(4096, 1, 1)
+    else alert('WebAudio not supported with your browser.')
 
-    }
+    audioNode.connect(context.destination)
 
-    navigator.mediaDevices.getUserMedia({audio:true}).then(stream => {
-        recorder = new MediaRecorder(stream)
-        recorder.ondataavailable = e => {
-            audioChunks.push(e.data)
-            if (recorder.state == 'inactive') {
-                blob = new Blob(audioChunks, {type:'audio/mpeg-3'})
-                console.log(blob.size)
-                player.src = URL.createObjectURL(blob)
-            }
+    navigator.mediaDevices.getUserMedia({audio:true}).then(onMicStream).catch(e => alert('An error occurred: ' + e))
+
+    let onMicStream = (stream) => {
+        audioInput = context.createMediaStreamSource(stream)
+        audioInput.connect(audioNode)
+        audioNode.onaudioprocess = d => {
+            audioChunks.push(new Float32Array(d.inputBuffer.getChannelData(0)))
+            
         }
-
-        /* */
-        recordStart.disabled = false
-    }).catch(e => alert('An error occurred: ' + e))
+    }
 
     recordStart.onclick = e => {
         audioChunks = []
-        recorder.start()
         console.log('hellllllooooo')
         recordStart.disabled = true
         recordStop.disabled = false
     }
 
     recordStop.onclick = e => {
-        recorder.stop()
         recordStop.disabled = true
         recordStart.disabled = false
         
