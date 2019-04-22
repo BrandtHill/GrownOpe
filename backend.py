@@ -39,8 +39,7 @@ def contact():
 
 @app.route('/voicemail', methods=['POST'])
 def voicemail_upload():
-    print(request.form)
-    tmp_file = request.files.get('audiofile')
+    tmp_file = request.files.get('audioblob')
     print(tmp_file)
     ver_res = verify_recaptcha(request.form.get('g-recaptcha-response'), request.remote_addr)
     if (not ver_res['success']): return 'You are a robot. Contact not made.'
