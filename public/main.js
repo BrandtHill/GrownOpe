@@ -10,15 +10,10 @@ window.addEventListener('load', () => {
         })
     }
 
-    var audioChunks = []
-    var audioNode
     var audioInput
     var audioInit = false
-    var audioLength = 0
     var context
-    var sampleRate
     var audioRecorder
-    var recording = false
     var recordStart = document.getElementById('recordStart')
     var recordStop = document.getElementById('recordStop')
     var player = document.getElementById('player')
@@ -27,7 +22,6 @@ window.addEventListener('load', () => {
 
     let onMicStream = (stream) => {
         audioInput = context.createMediaStreamSource(stream)
-        audioInput.connect(audioNode)
         audioRecorder = new WebAudioRecorder(audioInput, {
             workerDir: 'lib/',
             encoding: 'mp3',
@@ -44,10 +38,6 @@ window.addEventListener('load', () => {
     let initAudio = () => {
         let AudioContext = window.AudioContext || window.webkitAudioContext
         context = new AudioContext()
-        if (context.createJavaScriptNode) audioNode = context.createJavaScriptNode(4096, 1, 1)
-        else if (context.createScriptProcessor) audioNode = context.createScriptProcessor(4096, 1, 1)
-        else alert('WebAudio not supported with your browser.')
-        audioNode.connect(context.destination)
         navigator.mediaDevices.getUserMedia({audio:true}).then(onMicStream).catch(e => alert('An error occurred: ' + e))
     }
 
@@ -70,40 +60,35 @@ window.addEventListener('load', () => {
         recordStart.disabled = false
         recording = false
         audioRecorder.finishRecording()
-        //console.log(audioChunks.length)
-        //console.log(sampleRate)
-        //let wavFile = encodeWav()
-        //blob = new Blob([wavFile], {type: 'audio/wav'})
-        //player.src = URL.createObjectURL(blob)
     }
 
     let setRecorderCallbacks = (ar) => {
         ar.onComplete = (r, b) => {
-            blob = b
-            player.src = URL.createObjectURL(blob)
-            console.log('We made it')
+            blobs.voicemail = {
+                name: 'audioblob',
+                blob: b,
+                filename: '_' + Date.now() + '.mp3'
+            }
+            player.src = URL.createObjectURL(blobs.voicemail.blob)
+            console.log(blobs.voicemail)
         }
     }
 
 })
-
-var blob
 
 var sendData = (form) => {
     var XHR = new XMLHttpRequest()
     let formName = form.id.replace('Form', '')
 
     XHR.addEventListener('load', (event) => console.log(event.target.responseText))
-
     XHR.addEventListener('error', (event) => console.log("Something went awry! " + event.target.responseText))
 
     XHR.open('POST', 'https://' + window.location.hostname + '/' + formName)
 
     let fd = new FormData(form)
     
-    if (formName == 'voicemail') {
-        if (!blob) return
-        fd.append('audioblob', blob, 'test.wav')
+    if (blobs[formName].blob) {
+        fd.append(blobs[formName].name, blobs[formName].blob, fd.get('name').replace(/\s+/g,'') + blobs[formName].filename)
     }
 
     XHR.send(fd)
@@ -114,6 +99,8 @@ var sendData = (form) => {
 }
 
 let recaps = {}
+
+let blobs = {}
 
 var onloadCallback = () => {
     recaps.contact = grecaptcha.render('contactRecap', {'callback': () => sendData(document.getElementById('contactForm'))}, true)
