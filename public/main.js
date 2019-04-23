@@ -2,10 +2,10 @@ window.addEventListener('load', () => {
 
     var forms = document.getElementsByTagName('form')
 
-    for (let f of forms) {
-        f.addEventListener('submit', e => {
+    for (let i = 0; i < forms.length; i++) {
+        forms[i].addEventListener('submit', e => {
             e.preventDefault()
-            grecaptcha.execute(recaps[f.id.replace('Form', '')])
+            grecaptcha.execute(recaps[forms[i].id.replace('Form', '')])
             //sendData(f)
         })
     }
