@@ -96,12 +96,8 @@ footer {
     margin-bottom: 50px;
 }
 
-#spotify {
-    
-}
-
 #contact {
-    margin-top: 50px;
+    margin-top: 100px;
 }
 
 input, textarea, button {
@@ -114,7 +110,13 @@ input, textarea, button {
     box-shadow: -0px 0px 30px #00000022;
 }
 
+textarea {
+    resize: vertical;
+    min-height: 96px;
+}
+
 #voicemail {
+    margin-top: 100px;
     margin-bottom: 450px;
 }
 

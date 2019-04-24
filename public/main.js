@@ -14,6 +14,7 @@ window.addEventListener('load', () => {
     var audioInit = false
     var context
     var audioRecorder
+    var interval
     var recordStart = document.getElementById('recordStart')
     var recordStop = document.getElementById('recordStop')
     var player = document.getElementById('player')
@@ -52,12 +53,17 @@ window.addEventListener('load', () => {
             audioRecorder.startRecording()
             recordStart.disabled = true
             recordStop.disabled = false
+            interval = setInterval(() => {
+                recordStart.innerText = formatTimePretty(audioRecorder.recordingTime())
+            }, 100)
         }
     }
 
     recordStop.onclick = e => {
         recordStop.disabled = true
         recordStart.disabled = false
+        clearInterval(interval)
+        recordStart.innerText = 'Restart'
         recording = false
         audioRecorder.finishRecording()
     }
@@ -75,6 +81,12 @@ window.addEventListener('load', () => {
     }
 
 })
+
+var formatTimePretty = (num) => {
+    let min = Math.floor(num/60)
+    let sec = num % 60
+    return (min < 10 ? '0' + min : min) + ':' + (sec < 10 ? '0' + sec.toFixed(1) : sec.toFixed(1))
+}
 
 var sendData = (form) => {
     var XHR = new XMLHttpRequest()
