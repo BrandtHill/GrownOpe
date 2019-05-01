@@ -8,7 +8,7 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.mime.audio import MIMEAudio
 
-app = Flask(__name__, static_folder='../public/', root_path='../')
+app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024 * 25
 
 config = configparser.ConfigParser()
@@ -48,11 +48,11 @@ def voicemail_upload():
     msg['Subject'] = 'grownope.com: Voicemail from ' + request.form.get('name')
     msg['From'] = EMAIL
     msg['To'] = EMAIL
-    msg.preamble = 'Received an audiofile {} from IP {}'.format(tmp_file.filename, request.remote_addr)
     subtype = audio_map[tmp_file.filename.split('.')[-1]]
     audio_attachment = MIMEAudio(tmp_file.read(), subtype)
     audio_attachment.add_header('Content-Disposition', 'attachment', filename = tmp_file.filename)
     msg.attach(audio_attachment)
+    msg.attach(MIMEText('Received an audiofile {} from IP {}'.format(tmp_file.filename, request.environ.get('HTTP_X_REAL_IP', request.remote_addr))))
     return send_email_message(msg)
 
 def verify_recaptcha(response_token, ip_addr):

@@ -115,6 +115,11 @@ textarea {
     min-height: 96px;
 }
 
+::placeholder {
+    color: #00000066;
+    opacity: 1;
+}
+
 #voicemail {
     margin-top: 100px;
     margin-bottom: 450px;

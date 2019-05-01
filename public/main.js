@@ -27,7 +27,7 @@ window.addEventListener('load', () => {
             workerDir: 'lib/',
             encoding: 'mp3',
             options: {
-                timeLimit: 900
+                timeLimit: 1200
             }
         })
         setRecorderCallbacks(audioRecorder)
@@ -46,9 +46,13 @@ window.addEventListener('load', () => {
         audioChunks = []
         audioLength = 0
         if (!audioInit) {
-            try {initAudio()} catch(e) {alert(e)}
+            try {initAudio()} catch(e) {alert('Your browser doesn\'t support the API for capturing microphone data.\niOS: Use Safari\nAndroid: Use Chrome\nDesktop: Use whatever')}
         }
         else {
+            if (navigator.vender == "Apple Computer, Inc.") {
+                location.reload()
+            }
+            
             recording = true
             audioRecorder.startRecording()
             recordStart.disabled = true
@@ -79,7 +83,7 @@ window.addEventListener('load', () => {
             console.log(blobs.voicemail)
         }
     }
-
+    alert(navigator.vendor)
 })
 
 var formatTimePretty = (num) => {
