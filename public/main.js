@@ -18,16 +18,21 @@ window.addEventListener('load', () => {
     var recordStart = document.getElementById('recordStart')
     var recordStop = document.getElementById('recordStop')
     var player = document.getElementById('player')
+    var mediaStream
 
     recordStart.disabled = false
 
     let onMicStream = (stream) => {
+        mediaStream = stream
         audioInput = context.createMediaStreamSource(stream)
         audioRecorder = new WebAudioRecorder(audioInput, {
             workerDir: 'lib/',
             encoding: 'mp3',
             options: {
-                timeLimit: 1200
+                timeLimit: 1200,
+                mp3: {
+                    bitRate: 160
+                }
             }
         })
         setRecorderCallbacks(audioRecorder)
@@ -40,6 +45,8 @@ window.addEventListener('load', () => {
         let AudioContext = window.AudioContext || window.webkitAudioContext
         context = new AudioContext()
         navigator.mediaDevices.getUserMedia({audio:true}).then(onMicStream).catch(e => alert('An error occurred: ' + e))
+        player.src = ''
+        document.getElementById('voicemailButton').innerText = 'Submit'
     }
 
     recordStart.onclick = e => {
@@ -49,7 +56,6 @@ window.addEventListener('load', () => {
             try {initAudio()} catch(e) {alert('Your browser doesn\'t support the API for capturing microphone data.\niOS: Use Safari\nAndroid: Use Chrome\nDesktop: Use whatever')}
         }
         else {
-            if (recordStart.innerText == 'Restart' && navigator.vendor == 'Apple Computer, Inc.') location.reload(false)
             recording = true
             audioRecorder.startRecording()
             recordStart.disabled = true
@@ -78,6 +84,8 @@ window.addEventListener('load', () => {
             }
             player.src = URL.createObjectURL(blobs.voicemail.blob)
             console.log(blobs.voicemail)
+            mediaStream.getTracks().forEach(track => track.stop())
+            audioInit = false
         }
     }
 })
@@ -95,8 +103,15 @@ var sendData = (form) => {
 
     XHR.addEventListener('load', (event) => {
         console.log(event.target.responseText)
-        button.innerText = 'Submitted'
-        button.disabled = true
+        if (event.target.status == 200) {
+            button.innerText = 'Submitted'
+            button.disabled = true
+            setTimeout(() => button.disabled = false, 10000)
+        } else {
+            button.innerText = 'Error - Resubmit'
+            button.disabled = false
+        }
+        
     })
 
     XHR.addEventListener('error', (event) => {

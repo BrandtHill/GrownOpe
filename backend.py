@@ -4,6 +4,7 @@ import json
 import requests
 import configparser
 import datetime
+import time
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.mime.audio import MIMEAudio
@@ -39,6 +40,9 @@ def contact():
 
 @app.route('/voicemail', methods=['POST'])
 def voicemail_upload():
+    if request.form.get('name') == 'debug':
+        time.sleep(2)
+        return 'debug', 500
     tmp_file = request.files.get('audioblob')
     print(request.form)
     print(tmp_file)
