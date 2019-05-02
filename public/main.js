@@ -49,10 +49,7 @@ window.addEventListener('load', () => {
             try {initAudio()} catch(e) {alert('Your browser doesn\'t support the API for capturing microphone data.\niOS: Use Safari\nAndroid: Use Chrome\nDesktop: Use whatever')}
         }
         else {
-            if (navigator.vender == "Apple Computer, Inc.") {
-                location.reload()
-            }
-            
+            if (recordStart.innerText == 'Restart' && navigator.vendor == 'Apple Computer, Inc.') location.reload(false)
             recording = true
             audioRecorder.startRecording()
             recordStart.disabled = true
@@ -83,7 +80,6 @@ window.addEventListener('load', () => {
             console.log(blobs.voicemail)
         }
     }
-    alert(navigator.vendor)
 })
 
 var formatTimePretty = (num) => {
@@ -95,9 +91,19 @@ var formatTimePretty = (num) => {
 var sendData = (form) => {
     var XHR = new XMLHttpRequest()
     let formName = form.id.replace('Form', '')
+    let button = document.getElementById(formName + 'Button')
 
-    XHR.addEventListener('load', (event) => console.log(event.target.responseText))
-    XHR.addEventListener('error', (event) => console.log("Something went awry! " + event.target.responseText))
+    XHR.addEventListener('load', (event) => {
+        console.log(event.target.responseText)
+        button.innerText = 'Submitted'
+        button.disabled = true
+    })
+
+    XHR.addEventListener('error', (event) => {
+        console.log("Something went awry! " + event.target.responseText)
+        button.innerText = 'Error - Resubmit'
+        button.disabled = false
+    })
 
     XHR.open('POST', 'https://' + window.location.hostname + '/' + formName)
 
@@ -109,9 +115,7 @@ var sendData = (form) => {
 
     XHR.send(fd)
 
-    button = document.getElementById(formName + 'Button')
-    button.innerText = 'Submitted'
-    button.disabled = true
+    button.innerHTML = '<div class=\'loader\'></div>'
 }
 
 let recaps = {}

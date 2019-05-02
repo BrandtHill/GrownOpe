@@ -43,12 +43,14 @@ body {
 .social a {
     border: none;
     text-decoration: none;
+    color: #DBD8DF;
     color: #FFFFFFBB;
 }
 
 .social a i {
     margin: 10px;
     font-size: 40px;
+    color: #DBD8DF;
     color: #FFFFFFBB;
     text-decoration: none;
 }
@@ -56,6 +58,7 @@ body {
 .avatar {
     max-width: 100%;
     border-radius: 50%;
+    box-shadow: -0px 20px 40px #665D72;
     box-shadow: -0px 20px 40px #00000044;
     margin-bottom: 70px;
 }
@@ -88,6 +91,7 @@ footer {
 #episodes iframe {
     max-width: 90%;
     min-width: 50%;
+    box-shadow: -0px 0px 90px #665D72;
     box-shadow: -0px 0px 90px #00000044;
     border-radius: 20px;
 }
@@ -104,6 +108,7 @@ input, textarea, button {
     font: inherit;
     margin: 5px 5px;
     border: none;
+    background-color: #A39AAC;
     background-color: #FFFFFF44;
     padding: 5px;
     border-radius: 5px;
@@ -116,6 +121,7 @@ textarea {
 }
 
 ::placeholder {
+    color: #666;
     color: #00000066;
     opacity: 1;
 }
@@ -135,6 +141,27 @@ form {
 
 audio {
     width: 100%;
+}
+
+.loader {
+    border: 7px solid #444;
+    border-top: 7px solid #817790;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    -webkit-animation: spin 1s linear infinite;
+    animation: spin 1s linear infinite;
+    margin: auto;
+}
+
+@-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 #recordButtons {
