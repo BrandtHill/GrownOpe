@@ -46,8 +46,8 @@ def voicemail_upload():
     tmp_file = request.files.get('audioblob')
     print(request.form)
     print(tmp_file)
-    ver_res = verify_recaptcha(request.form.get('g-recaptcha-response'), request.remote_addr)
-    if (not ver_res['success']): return 'You are a robot. Contact not made.'
+    #ver_res = verify_recaptcha(request.form.get('g-recaptcha-response'), request.remote_addr)
+    #if (not ver_res['success']): return 'You are a robot. Contact not made.'
     msg = MIMEMultipart()
     msg['Subject'] = 'grownope.com: Voicemail from ' + request.form.get('name')
     msg['From'] = EMAIL
@@ -77,4 +77,4 @@ def send_email_message(msg):
     return 'Success'
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=8000, debug=True)
+    app.run(host='127.0.0.1', port=8000, debug=False)

@@ -6,7 +6,7 @@ window.addEventListener('load', () => {
         forms[i].addEventListener('submit', e => {
             e.preventDefault()
             grecaptcha.execute(recaps[forms[i].id.replace('Form', '')])
-            //sendData(f)
+            //sendData(forms[i])
         })
     }
 
@@ -124,13 +124,14 @@ var sendData = (form) => {
 
     let fd = new FormData(form)
     
-    if (blobs[formName].blob) {
+    if (blobs[formName]) {
         fd.append(blobs[formName].name, blobs[formName].blob, fd.get('name').replace(/\s+/g,'') + blobs[formName].filename)
     }
 
     XHR.send(fd)
 
     button.innerHTML = '<div class=\'loader\'></div>'
+    button.disabled = true
 }
 
 let recaps = {}
